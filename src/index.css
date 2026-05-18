@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+@config "../tailwind.config.js";
+
+@layer components {
+  .glass-card {
+      background: rgba(250, 248, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 128, 0.06);
+  }
+  .ai-glow {
+      box-shadow: 0 0 20px rgba(0, 219, 233, 0.15);
+  }
+}
+
+@layer utilities {
+  .scroll-hide::-webkit-scrollbar {
+      display: none;
+  }
+  .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+  }
+}
+
+body {
+  min-height: max(884px, 100dvh);
+}
+
+html {
+  scroll-behavior: smooth;
+}
