@@ -33,7 +33,7 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="font-title-md text-xl text-primary mb-2">Email Inquiries</p>
-                  <a href="mailto:contact@nexacore.ai" className="font-body-md text-secondary hover:underline">contact@nexacore.ai</a>
+                  <a href="mailto:hr@nexacoreai.com " className="font-body-md text-secondary hover:underline">hr@nexacoreai.com </a>
                   <p className="text-sm text-on-surface-variant mt-1">We aim to respond within 24 hours.</p>
                 </div>
               </div>
