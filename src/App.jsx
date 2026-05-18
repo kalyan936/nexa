@@ -1,29 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Industries from './components/Industries';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+// Pages
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
+import IndustriesPage from './pages/IndustriesPage';
+import CareersPage from './pages/CareersPage';
+import ContactPage from './pages/ContactPage';
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 function App() {
-  const [activeSection, setActiveSection] = useState('home');
-
   return (
-    <div className="bg-background text-on-surface font-body-md" data-mode="connect">
-      <Header activeSection={activeSection} setActiveSection={setActiveSection} />
-      
-      <main className="pt-20">
-        <Hero />
-        <About />
-        <Services />
-        <Industries />
-        <Contact />
-      </main>
+    <BrowserRouter>
+      <div className="bg-background text-on-surface font-body-md min-h-screen flex flex-col" data-mode="connect">
+        <ScrollToTop />
+        <Header />
+        
+        <main className="flex-1 flex flex-col">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/industries" element={<IndustriesPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

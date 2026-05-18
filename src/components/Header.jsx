@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import Button from './Button';
 
-const Header = ({ activeSection, setActiveSection }) => {
+const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (e, id) => {
-    e.preventDefault();
-    setActiveSection(id);
-    setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      // Offset by header height (approx 80px) to prevent the fixed header from covering the content
-      const y = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    } else {
-      // For sections like Careers that don't exist yet
-      alert(`The ${id} section is coming soon!`);
-    }
-  };
-
-  const getLinkClass = (id) => {
-    const isActive = activeSection === id;
+  const getLinkClass = ({ isActive }) => {
     const baseClasses = "font-label-sm text-label-sm pb-1 border-b-2 transition-colors duration-300";
     if (isActive) {
       return `${baseClasses} text-primary font-bold border-secondary-fixed-dim`;
@@ -28,8 +13,7 @@ const Header = ({ activeSection, setActiveSection }) => {
     return `${baseClasses} text-on-surface-variant border-transparent hover:text-primary`;
   };
 
-  const getMobileLinkClass = (id) => {
-    const isActive = activeSection === id;
+  const getMobileLinkClass = ({ isActive }) => {
     const baseClasses = "font-title-md text-title-md py-4 transition-colors duration-300 w-full text-center border-b border-primary/10 block";
     if (isActive) {
       return `${baseClasses} text-primary font-bold bg-primary/5`;
@@ -37,10 +21,14 @@ const Header = ({ activeSection, setActiveSection }) => {
     return `${baseClasses} text-on-surface-variant hover:text-primary hover:bg-primary/5`;
   };
 
+  const handleMobileNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <>
       <header className="fixed top-0 w-full z-50 bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-b border-primary/10 shadow-[0_0_15px_rgba(0,240,255,0.1)] h-20 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <svg className="w-12 h-12 text-[#000080]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <path d="M2 12h20" />
@@ -59,14 +47,14 @@ const Header = ({ activeSection, setActiveSection }) => {
             <span>AI</span>
             <span>Technologies</span>
           </div>
-        </div>
+        </Link>
         <div className="hidden md:flex gap-8 items-center">
-          <a className={getLinkClass('home')} href="#home" onClick={(e) => scrollToSection(e, 'home')}>Home</a>
-          <a className={getLinkClass('about')} href="#about" onClick={(e) => scrollToSection(e, 'about')}>About</a>
-          <a className={getLinkClass('services')} href="#services" onClick={(e) => scrollToSection(e, 'services')}>Services</a>
-          <a className={getLinkClass('industries')} href="#industries" onClick={(e) => scrollToSection(e, 'industries')}>Industries</a>
-          <a className={getLinkClass('careers')} href="#careers" onClick={(e) => scrollToSection(e, 'careers')}>Careers</a>
-          <a className={getLinkClass('contact')} href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
+          <NavLink to="/" className={getLinkClass} end>Home</NavLink>
+          <NavLink to="/about" className={getLinkClass}>About</NavLink>
+          <NavLink to="/services" className={getLinkClass}>Services</NavLink>
+          <NavLink to="/industries" className={getLinkClass}>Industries</NavLink>
+          <NavLink to="/careers" className={getLinkClass}>Careers</NavLink>
+          <NavLink to="/contact" className={getLinkClass}>Contact</NavLink>
         </div>
         <Button className="md:hidden text-primary bg-transparent" aria-label="Menu" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           <span className="material-symbols-outlined text-[32px]">{isMobileMenuOpen ? 'close' : 'menu'}</span>
@@ -75,12 +63,12 @@ const Header = ({ activeSection, setActiveSection }) => {
 
       {isMobileMenuOpen && (
         <div className="fixed inset-0 top-20 z-40 bg-surface/95 backdrop-blur-xl md:hidden flex flex-col items-center overflow-y-auto">
-          <a className={getMobileLinkClass('home')} href="#home" onClick={(e) => scrollToSection(e, 'home')}>Home</a>
-          <a className={getMobileLinkClass('about')} href="#about" onClick={(e) => scrollToSection(e, 'about')}>About</a>
-          <a className={getMobileLinkClass('services')} href="#services" onClick={(e) => scrollToSection(e, 'services')}>Services</a>
-          <a className={getMobileLinkClass('industries')} href="#industries" onClick={(e) => scrollToSection(e, 'industries')}>Industries</a>
-          <a className={getMobileLinkClass('careers')} href="#careers" onClick={(e) => scrollToSection(e, 'careers')}>Careers</a>
-          <a className={getMobileLinkClass('contact')} href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
+          <NavLink to="/" className={getMobileLinkClass} onClick={handleMobileNavClick} end>Home</NavLink>
+          <NavLink to="/about" className={getMobileLinkClass} onClick={handleMobileNavClick}>About</NavLink>
+          <NavLink to="/services" className={getMobileLinkClass} onClick={handleMobileNavClick}>Services</NavLink>
+          <NavLink to="/industries" className={getMobileLinkClass} onClick={handleMobileNavClick}>Industries</NavLink>
+          <NavLink to="/careers" className={getMobileLinkClass} onClick={handleMobileNavClick}>Careers</NavLink>
+          <NavLink to="/contact" className={getMobileLinkClass} onClick={handleMobileNavClick}>Contact</NavLink>
         </div>
       )}
     </>
